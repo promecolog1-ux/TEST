@@ -5,44 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Генератор идей для постов</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
       font-family: Arial, sans-serif;
-      background: #f4f7fb;
+      background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
       color: #1f2937;
     }
 
     .container {
-      max-width: 720px;
-      margin: 80px auto;
+      width: 100%;
+      max-width: 760px;
       padding: 32px;
       background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      animation: card-enter 0.7s ease;
     }
 
     h1 {
       margin-top: 0;
-      margin-bottom: 24px;
-      font-size: 2rem;
+      margin-bottom: 12px;
+      font-size: 2.1rem;
     }
 
-    ul {
-      margin: 0;
+    .subtitle {
+      margin: 0 0 24px;
+      color: #4b5563;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .features {
+      margin: 0 0 28px;
       padding-left: 24px;
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1.05rem;
+      line-height: 1.9;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(37, 99, 235, 0.26);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .result {
+      min-height: 120px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #dbeafe;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .result-label {
+      margin: 0 0 10px;
+      color: #2563eb;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .result-text {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    @keyframes card-enter {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
 <body>
   <main class="container">
     <h1>Генератор идей для постов</h1>
-    <ul>
+    <p class="subtitle">Выберите формат, и страница покажет случайную идею для быстрого старта.</p>
+
+    <ul class="features">
       <li>5 идей постов для экспертов</li>
       <li>3 идеи сторис на сегодня</li>
-      <li>Контент-план на неделю</li>
+      <li>Контент план на неделю</li>
     </ul>
+
+    <div class="actions">
+      <button type="button" data-type="posts">Идея поста</button>
+      <button type="button" data-type="stories">Идея сторис</button>
+      <button type="button" data-type="plan">План на неделю</button>
+    </div>
+
+    <section class="result show" id="result">
+      <p class="result-label" id="resultLabel">Готово</p>
+      <p class="result-text" id="resultText">Нажмите на одну из кнопок, чтобы получить идею.</p>
+    </section>
   </main>
+
+  <script>
+    const ideas = {
+      posts: [
+        "Разберите 3 ошибки, которые чаще всего мешают вашим клиентам получить результат.",
+        "Покажите кейс клиента: с чего начали, что сделали и какой получили итог.",
+        "Соберите пост с личной экспертной позицией: с чем вы не согласны в своей нише.",
+        "Объясните сложную тему простыми словами на одном жизненном примере.",
+        "Сделайте пост-ответ на частый вопрос, который вам задают в сообщениях."
+      ],
+      stories: [
+        "Покажите ваш рабочий процесс и задайте аудитории вопрос про их задачи на день.",
+        "Сделайте мини-опрос: что сейчас актуальнее для подписчиков, рост, продажи или упаковка.",
+        "Поделитесь одной быстрой фишкой и предложите написать вам ключевое слово в директ."
+      ],
+      plan: [
+        "Понедельник: экспертный пост. Среда: кейс клиента. Пятница: продающий разбор оффера.",
+        "Понедельник: личная история. Вторник: сторис-опрос. Четверг: полезный чек-лист. Суббота: ответы на вопросы.",
+        "Вторник: 3 совета по теме. Четверг: разбор ошибки. Суббота: отзыв клиента и мягкий призыв к действию."
+      ]
+    };
+
+    const labels = {
+      posts: "Идея поста",
+      stories: "Идея сторис",
+      plan: "Контент план"
+    };
+
+    const result = document.getElementById("result");
+    const resultLabel = document.getElementById("resultLabel");
+    const resultText = document.getElementById("resultText");
+    const buttons = document.querySelectorAll("button[data-type]");
+
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function showIdea(type) {
+      result.classList.remove("show");
+      resultLabel.textContent = labels[type];
+      resultText.textContent = randomItem(ideas[type]);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          result.classList.add("show");
+        });
+      });
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        showIdea(button.dataset.type);
+      });
+    });
+  </script>
 </body>
 </html>
