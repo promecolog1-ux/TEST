@@ -9,97 +9,221 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: linear-gradient(180deg, #eaf1ff 0%, #f6f8ff 100%);
+      --phone-bg: rgba(255, 255, 255, 0.82);
+      --card-bg: #ffffff;
+      --muted-bg: #f3f6fc;
+      --text: #172033;
+      --subtext: #5a6478;
+      --accent: #4f46e5;
+      --accent-strong: #4338ca;
+      --accent-soft: rgba(79, 70, 229, 0.12);
+      --border: rgba(148, 163, 184, 0.25);
+      --shadow: 0 24px 60px rgba(37, 56, 88, 0.18);
+    }
+
+    body.dark-theme {
+      --bg: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+      --phone-bg: rgba(15, 23, 42, 0.85);
+      --card-bg: #182235;
+      --muted-bg: #1f2b42;
+      --text: #f8fafc;
+      --subtext: #c1cad9;
+      --accent: #8b5cf6;
+      --accent-strong: #7c3aed;
+      --accent-soft: rgba(139, 92, 246, 0.18);
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 28px 70px rgba(2, 8, 23, 0.45);
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 20px;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #eef4ff 0%, #f9fbff 100%);
-      color: #1f2937;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
-    .container {
+    .phone {
       width: 100%;
-      max-width: 760px;
-      padding: 32px;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      max-width: 390px;
+      padding: 14px;
+      border-radius: 36px;
+      background: var(--phone-bg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
       animation: card-enter 0.7s ease;
+      transition: background 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .screen {
+      padding: 18px;
+      border-radius: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+
+    .notch {
+      width: 110px;
+      height: 24px;
+      margin: 0 auto 18px;
+      border-radius: 0 0 18px 18px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .app-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+    }
+
+    .theme-toggle button,
+    .category-button,
+    .generate-button {
+      font: inherit;
+    }
+
+    .theme-button {
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--subtext);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .theme-button.active {
+      background: var(--card-bg);
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+      border: 1px solid var(--border);
     }
 
     h1 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 2.1rem;
+      margin: 0 0 10px;
+      font-size: 1.8rem;
+      line-height: 1.2;
     }
 
     .subtitle {
-      margin: 0 0 24px;
-      color: #4b5563;
-      font-size: 1rem;
+      margin: 0;
+      color: var(--subtext);
+      font-size: 0.98rem;
       line-height: 1.6;
     }
 
     .features {
-      margin: 0 0 28px;
-      padding-left: 24px;
-      font-size: 1.05rem;
-      line-height: 1.9;
-    }
-
-    .actions {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
     }
 
-    button {
-      border: 0;
-      border-radius: 14px;
+    .features li {
       padding: 14px 16px;
-      background: #2563eb;
-      color: #ffffff;
-      font-size: 1rem;
+      border-radius: 18px;
+      background: var(--muted-bg);
+      color: var(--text);
+      font-size: 0.98rem;
+      line-height: 1.5;
+      border: 1px solid var(--border);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .category-button {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px 10px;
+      background: var(--muted-bg);
+      color: var(--subtext);
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
 
-    button:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-      box-shadow: 0 14px 24px rgba(37, 99, 235, 0.26);
-    }
-
-    button:active {
-      transform: scale(0.98);
+    .category-button.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 14px 24px rgba(79, 70, 229, 0.24);
     }
 
     .result {
-      min-height: 120px;
+      min-height: 158px;
       padding: 20px;
-      border-radius: 16px;
-      background: #f8fafc;
-      border: 1px solid #dbeafe;
+      border-radius: 22px;
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: translateY(12px) scale(0.98);
+      transition: opacity 0.35s ease, transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
     }
 
     .result.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .result-label {
       margin: 0 0 10px;
-      color: #2563eb;
+      color: var(--accent);
       font-size: 0.95rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -110,6 +234,39 @@
       margin: 0;
       font-size: 1.15rem;
       line-height: 1.7;
+    }
+
+    .generate-button {
+      width: 100%;
+      border: 0;
+      border-radius: 20px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 16px 28px rgba(79, 70, 229, 0.26);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .generate-button:hover,
+    .category-button:hover,
+    .theme-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .generate-button:active,
+    .category-button:active,
+    .theme-button:active {
+      transform: scale(0.98);
+    }
+
+    .footer-note {
+      margin: 14px 0 0;
+      text-align: center;
+      color: var(--subtext);
+      font-size: 0.85rem;
     }
 
     @keyframes card-enter {
@@ -123,37 +280,64 @@
       }
     }
 
-    @media (max-width: 640px) {
-      .container {
-        padding: 24px;
+    @media (max-width: 420px) {
+      body {
+        padding: 10px;
       }
 
-      h1 {
-        font-size: 1.8rem;
+      .phone {
+        padding: 10px;
+        border-radius: 28px;
+      }
+
+      .screen {
+        padding: 16px;
+        border-radius: 22px;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-<body>
-  <main class="container">
-    <h1>Генератор идей для постов</h1>
-    <p class="subtitle">Выберите формат, и страница покажет случайную идею для быстрого старта.</p>
+<body class="light-theme">
+  <main class="phone">
+    <div class="notch"></div>
+    <section class="screen">
+      <div class="topbar">
+        <div class="app-badge">Контент AI</div>
+        <div class="theme-toggle" aria-label="Переключение темы">
+          <button type="button" class="theme-button active" data-theme="light">Светлая</button>
+          <button type="button" class="theme-button" data-theme="dark">Темная</button>
+        </div>
+      </div>
 
-    <ul class="features">
-      <li>5 идей постов для экспертов</li>
-      <li>3 идеи сторис на сегодня</li>
-      <li>Контент план на неделю</li>
-    </ul>
+      <div class="hero">
+        <h1>Генератор идей для постов</h1>
+        <p class="subtitle">Мобильный экран с быстрым выбором формата и одной кнопкой генерации.</p>
+      </div>
 
-    <div class="actions">
-      <button type="button" data-type="posts">Идея поста</button>
-      <button type="button" data-type="stories">Идея сторис</button>
-      <button type="button" data-type="plan">План на неделю</button>
-    </div>
+      <ul class="features">
+        <li>5 идей постов для экспертов</li>
+        <li>3 идеи сторис на сегодня</li>
+        <li>Контент план на неделю</li>
+      </ul>
 
-    <section class="result show" id="result">
-      <p class="result-label" id="resultLabel">Готово</p>
-      <p class="result-text" id="resultText">Нажмите на одну из кнопок, чтобы получить идею.</p>
+      <p class="section-title">Что сгенерировать</p>
+      <div class="categories">
+        <button type="button" class="category-button active" data-type="posts">Посты</button>
+        <button type="button" class="category-button" data-type="stories">Сторис</button>
+        <button type="button" class="category-button" data-type="plan">План</button>
+      </div>
+
+      <section class="result show" id="result">
+        <p class="result-label" id="resultLabel">Готово</p>
+        <p class="result-text" id="resultText">Выберите формат и нажмите на кнопку, чтобы получить идею.</p>
+      </section>
+
+      <button type="button" class="generate-button" id="generateButton">Сгенерировать идеи</button>
+      <p class="footer-note">Быстро, просто и удобно для телефона</p>
     </section>
   </main>
 
@@ -184,10 +368,14 @@
       plan: "Контент план"
     };
 
+    const body = document.body;
     const result = document.getElementById("result");
     const resultLabel = document.getElementById("resultLabel");
     const resultText = document.getElementById("resultText");
-    const buttons = document.querySelectorAll("button[data-type]");
+    const categoryButtons = document.querySelectorAll(".category-button");
+    const themeButtons = document.querySelectorAll(".theme-button");
+    const generateButton = document.getElementById("generateButton");
+    let selectedType = "posts";
 
     function randomItem(items) {
       return items[Math.floor(Math.random() * items.length)];
@@ -205,11 +393,43 @@
       });
     }
 
-    buttons.forEach((button) => {
+    function setActiveCategory(type) {
+      selectedType = type;
+      categoryButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.type === type);
+      });
+    }
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      body.classList.toggle("dark-theme", isDark);
+      body.classList.toggle("light-theme", !isDark);
+      themeButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.theme === theme);
+      });
+      window.localStorage.setItem("idea-theme", theme);
+    }
+
+    categoryButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        showIdea(button.dataset.type);
+        setActiveCategory(button.dataset.type);
       });
     });
+
+    themeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        applyTheme(button.dataset.theme);
+      });
+    });
+
+    generateButton.addEventListener("click", () => {
+      showIdea(selectedType);
+    });
+
+    const savedTheme = window.localStorage.getItem("idea-theme");
+    if (savedTheme === "dark" || savedTheme === "light") {
+      applyTheme(savedTheme);
+    }
   </script>
 </body>
 </html>
